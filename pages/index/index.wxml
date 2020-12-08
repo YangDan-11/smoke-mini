@@ -1,0 +1,11 @@
+<view class="container">
+  <view class="scan-wrapper" bind:tap="handleClick">
+    <image class="scan-outline-icon" src="/assets/icon/scan-outline.svg" ></image>
+    <text>扫一扫</text>
+  </view>
+  <view class="content">
+    <view wx:if="{{!checkboxOption || !checkboxOption.length}}" class='empty'>
+      空空如也!
+    </view>
+  </view>
+</view>
