@@ -1,8 +1,5 @@
-//index.js
-//获取应用实例
 import { baseUrl } from "../../config/dev";
-
-const app = getApp()
+import { getOptionFromProduct } from "../../utils/util";
 
 Page({
   data: {
@@ -12,18 +9,15 @@ Page({
     removeLoading: false,
     pager: {
       total: 5,
-      pageSize: 10,
+      pageSize: 1,
       current: 1
     },
-    dataList: []
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+    qrCodeList: []
   },
   onLoad: function () {
+    wx.setNavigationBarTitle({
+      title: '首页'
+    })
     this.getCheckboxOption()
   },
   getCheckboxOption(currentPage, pageSize, qrCodeUrl){
@@ -43,6 +37,7 @@ Page({
           const { list, current, pageSize, total } = data;
           this.setData({
             checkboxOption: getOptionFromProduct(list),
+            qrCodeList: list,
             pager: {
               total,
               current,
@@ -65,24 +60,17 @@ Page({
       }
     })
   },
-  handleChange(e){
-    const value = e.currentTarget.dataset.value;
-
-    const { checkedList } = this.state;
-    let tempCheckedList = checkedList;
-
-    const valueIndex = tempCheckedList.findIndex((item) => item === value);
-    if ( valueIndex !== -1) {
-      this.setData({
-        checkedList: tempCheckedList.filter(item => item !== value)
+  checkboxChange(e) {
+    const values = e.detail.value;
+    this.setData({
+      checkedList: values,
+      checkboxOption: this.data.checkboxOption.map((item) => {
+        return {
+          ...item,
+          checked: values.findIndex(checkedItem => checkedItem === item.value) !== -1
+        }
       })
-    } else {
-      tempCheckedList.push(value);
-      this.setData({
-        checkedList: tempCheckedList
-      })
-    }
-
+    })
   },
 
   downloadExcel(){
@@ -92,7 +80,7 @@ Page({
     wx.showLoading({
       title: '正在下载'
     });
-    const { checkedList } = this.state;
+    const { checkedList } = this.data;
     const encodeUrls = checkedList.map((item) => encodeURIComponent(item))
     const qrCodeUrls = encodeUrls.join(',');
     wx.downloadFile({
@@ -113,7 +101,15 @@ Page({
           })
         }
       },
-      complete() {
+      fail: () => {
+        wx.showToast({
+          title: '请求失败'
+        })
+      },
+      complete: () => {
+        this.setData({
+          downloadLoading: false
+        })
         wx.hideLoading()
       }
     })
@@ -125,7 +121,7 @@ Page({
       removeLoading: true
     });
 
-    const { checkedList } = this.state;
+    const { checkedList } = this.data;
     const encodeUrls = checkedList.map((item) => encodeURIComponent(item))
 
     const qrCodeUrls = encodeUrls.join(',');
@@ -134,7 +130,7 @@ Page({
       method: 'POST',
       success: (res) => {
         if (res.data.code === 200) {
-          this.getCheckboxOption(1, this.state.pager.pageSize);
+          this.getCheckboxOption(1, this.data.pager.pageSize);
           this.setData({
             checkedList: []
           })
@@ -145,31 +141,44 @@ Page({
   },
 
   selectAll() {
-    const { checkboxOption } = this.state;
+    const { checkboxOption } = this.data;
     this.setData({
-      checkedList: checkboxOption.map((item) => item.value)
+      checkedList: checkboxOption.map((item) => item.value),
+      checkboxOption: checkboxOption.map((item) => {
+        return {
+          ...item,
+          checked: true
+        }
+      })
     })
   },
 
   cancelSelectAll () {
+    const { checkboxOption } = this.data;
     this.setData({
-      checkedList: []
+      checkedList: [],
+      checkboxOption: checkboxOption.map((item) => {
+        return {
+          ...item,
+          checked: false
+        }
+      })
     })
   },
 
-  onPageChange(value){
+  onPageChange(e){
     this.setData({
       pager: {
-        ...this.state.pager,
-        current: value.current
+        ...this.data.pager,
+        current: e.detail
       }
     });
-    this.getCheckboxOption(value.current, this.state.pager.pageSize)
+    this.getCheckboxOption(e.detail, this.data.pager.pageSize)
   },
   handleClick(){
     wx.scanCode({
       success: (res) => {
-        this.getCheckboxOption(this.state.pager.current, this.state.pager.pageSize, res.result);
+        this.getCheckboxOption(this.data.pager.current, this.data.pager.pageSize, res.result);
       }
     })
   }
