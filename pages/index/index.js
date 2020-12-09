@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 import { baseUrl } from "../../config/dev";
 import { getOptionFromProduct } from "../../utils/util";
 
@@ -14,26 +12,13 @@ Page({
       pageSize: 1,
       current: 1
     },
-    qrCodeList: [{
-      qrcodeUrl: '12222',
-      productName: 'test',
-      codeSegment: '233333'
-    },
-      {
-        qrcodeUrl: '12223',
-        productName: 'test2',
-        codeSegment: '233333nnnn<br />444444'
-      }
-    ]
+    qrCodeList: []
   },
   onLoad: function () {
     wx.setNavigationBarTitle({
       title: '首页'
     })
-    this.setData({
-      checkboxOption: getOptionFromProduct(this.data.qrCodeList)
-    })
-    // this.getCheckboxOption()
+    this.getCheckboxOption()
   },
   getCheckboxOption(currentPage, pageSize, qrCodeUrl){
     wx.showLoading({
@@ -76,7 +61,6 @@ Page({
     })
   },
   checkboxChange(e) {
-    console.log(e)
     const values = e.detail.value;
     this.setData({
       checkedList: values,
@@ -116,6 +100,11 @@ Page({
             downloadLoading: false
           })
         }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '请求失败'
+        })
       },
       complete: () => {
         this.setData({
