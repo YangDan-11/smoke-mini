@@ -4,8 +4,33 @@
     <text>扫一扫</text>
   </view>
   <view class="content">
-    <view wx:if="{{!checkboxOption || !checkboxOption.length}}" class='empty'>
+    <view wx:if="{{!qrCodeList || !qrCodeList.length}}" class='empty'>
       空空如也!
     </view>
+
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkbox-list__label" wx:for="{{checkboxOption}}" wx:key="index">
+        <checkbox class="checkbox-list__checkbox" value="{{item.value}}" checked="{{item.checked}}"></checkbox>
+        <view class="label-wrapper">
+          <view class='label'>{{item.label}}</view>
+          <rich-text nodes="{{item.desc}}" class="desc"></rich-text>
+        </view>
+      </label>
+    </checkbox-group>
+
+    <pagination total="{{pager.total}}"
+    pageSize="{{pager.pageSize}}"
+    current="{{pager.current}}"
+    bind:onPageChange="onPageChange"></pagination>
+
+
+    <view class='button-wrapper'>
+      <button wx:if="{{checkedList.length === checkboxOption.length}}" class='cancel-select-all-btn' bind:tap="cancelSelectAll">取消全选</button>
+      <button wx:else class='select-all-btn' bind:tap="selectAll">全选</button>
+      <button disabled="{{!checkedList.length}}" class='delete-btn' bind:tap="remove">删除</button>
+
+      <button disabled="{{!checkedList.length}}"  class="download-btn" loading="{{downloadLoading}}" bind:tap="downloadExcel">下载excel</button>
+    </view>
+
   </view>
 </view>

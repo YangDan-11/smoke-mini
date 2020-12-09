@@ -1,0 +1,7 @@
+<view class="wrapper">
+    <button class="prev-btn" bind:tap="prevPage" disabled="{{current <= 1}}">上一页</button>
+
+    <view class="content">{{current}}/{{pageCount}}</view>
+
+    <button class="next-btn" bind:tap="nextPage" disabled="{{current === pageCount}}">下一页</button>
+</view>
