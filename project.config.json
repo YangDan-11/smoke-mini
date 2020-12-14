@@ -39,7 +39,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.14.1",
+  "libVersion": "2.10.0",
   "appid": "wx90ada6bc5b1fe759",
   "projectname": "smoke-mini",
   "debugOptions": {

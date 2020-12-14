@@ -9,7 +9,7 @@ Page({
     removeLoading: false,
     pager: {
       total: 5,
-      pageSize: 1,
+      pageSize: 10,
       current: 1
     },
     qrCodeList: []
@@ -18,7 +18,7 @@ Page({
     wx.setNavigationBarTitle({
       title: '首页'
     })
-    this.getCheckboxOption()
+    this.getCheckboxOption(1, this.data.pager.pageSize)
   },
   getCheckboxOption(currentPage, pageSize, qrCodeUrl){
     wx.showLoading({
@@ -33,6 +33,8 @@ Page({
       },
       success: (res) => {
         const { data, code, message } = res.data;
+        wx.hideLoading();
+
         if (code === 200 && data) {
           const { list, current, pageSize, total } = data;
           this.setData({
@@ -42,21 +44,23 @@ Page({
               total,
               current,
               pageSize
-            }
+            },
+            checkedList: []
           })
         } else if (code === 400) {
           wx.showToast({
-            title: message
+            title: message,
+            icon: 'info',
+            duration: 2000
           })
         }
       },
       fail() {
+        wx.hideLoading();
+
         wx.showToast({
           title: '请求失败'
         })
-      },
-      complete() {
-        wx.hideLoading();
       }
     })
   },

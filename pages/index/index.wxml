@@ -10,7 +10,7 @@
 
     <block wx:else>
       <checkbox-group bindchange="checkboxChange">
-        <label class="checkbox-list__label" wx:for="{{checkboxOption}}" wx:key="index">
+        <label class="checkbox-list__label" wx:for="{{checkboxOption}}" wx:key="value">
           <checkbox class="checkbox-list__checkbox" value="{{item.value}}" checked="{{item.checked}}"></checkbox>
           <view class="label-wrapper">
             <view class='label'>{{item.label}}</view>
