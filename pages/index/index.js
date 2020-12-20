@@ -185,5 +185,10 @@ Page({
         this.getCheckboxOption(this.data.pager.current, this.data.pager.pageSize, res.result);
       }
     })
+  },
+  search() {
+    wx.navigateTo({
+      url: '/pages/search/search'
+    })
   }
 })

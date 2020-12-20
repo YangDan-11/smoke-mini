@@ -1,7 +1,13 @@
 <view class="container">
-  <view class="scan-wrapper" bind:tap="handleClick">
-    <image class="scan-outline-icon" src="/assets/icon/scan-outline.svg" ></image>
-    <text>扫一扫</text>
+  <view class="wrapper">
+    <view class="scan-wrapper" bind:tap="handleClick">
+      <image class="scan-outline-icon" src="/assets/icon/scan-outline.svg" ></image>
+      <text>扫一扫</text>
+    </view>
+    <view class="search-wrapper" bind:tap="search">
+      <image class="scan-outline-icon" src="/assets/icon/search-icon.svg" ></image>
+      <text>搜索法条</text>
+    </view>
   </view>
   <view class="content">
     <view wx:if="{{!qrCodeList || !qrCodeList.length}}" class='empty'>
