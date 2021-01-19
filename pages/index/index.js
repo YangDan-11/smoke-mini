@@ -89,9 +89,10 @@ Page({
     const qrCodeUrls = encodeUrls.join(',');
     wx.downloadFile({
       url: `${baseUrl}/smoke/init/downSmokeData?qrCodeUrls=${qrCodeUrls}`,
+      filePath: wx.env.USER_DATA_PATH+ '/test.xls',
       success: (res) => {
         if (res.statusCode === 200) {
-          const filePath = res.tempFilePath;
+          const filePath = res.filePath;
           wx.openDocument({
             filePath: filePath,
             showMenu: true,

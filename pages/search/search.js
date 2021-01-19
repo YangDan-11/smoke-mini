@@ -1,4 +1,5 @@
 import { list } from '../../utils/doc.js'
+import {baseUrl} from "../../config/dev";
 
 Page({
   data: {
@@ -30,6 +31,19 @@ Page({
   search() {
     this.searchValue(this.data.inputValue)
   },
+  searchFromApi() {
+    wx.request({
+      url: `${baseUrl}/smoke/fileSearch/search`,
+      data: {
+        keyWord: "行政机关",
+        pageSize: 10,
+        pageIndex: 1
+      },
+      success: (res) => {
+        console.log(res)
+      }
+    })
+  },
   searchValue(searchValue) {
     wx.showLoading({
       title: '搜索中，请稍后'
@@ -41,34 +55,25 @@ Page({
     const values = []
     const allKeys = Object.keys(list)
     allKeys.forEach((key) => {
-      if(key.indexOf(searchValueKeyWord)!== -1) {
-        const highlightLabel = "<span class=\"highLight\">" + searchValueKeyWord + "</span>"
-        const highlightKey= key.replace(searchValueKeyWord, highlightLabel)
-        values.push({
-          title: highlightKey,
-          value: list[key]
+      if (list[key].length) {
+        const otherDocValues = list[key]
+        const otherValues = []
+        otherDocValues.forEach(item => {
+          if (item.indexOf(searchValueKeyWord) !== -1) {
+            const highlightLabel = "<span class=\"highLight\">" + searchValueKeyWord + "</span>"
+            const highlightItem = item.replace(searchValueKeyWord, highlightLabel)
+            otherValues.push(highlightItem)
+          }
         })
-      } else {
-        if (list[key].length) {
-          const otherDocValues = list[key]
-          const otherValues = []
-          otherDocValues.forEach(item => {
-            if (item.indexOf(searchValueKeyWord) !== -1) {
-              const highlightLabel = "<span class=\"highLight\">" + searchValueKeyWord + "</span>"
-              const highlightItem = item.replace(searchValueKeyWord, highlightLabel)
-              otherValues.push(highlightItem)
-            }
+
+        if(otherValues.length) {
+          values.push({
+            title: key,
+            value: otherValues
           })
 
-          if(otherValues.length) {
-            values.push({
-              title: key,
-              value: otherValues
-            })
-
-          }
-
         }
+
       }
     })
 
