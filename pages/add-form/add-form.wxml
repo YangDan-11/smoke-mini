@@ -1,0 +1,28 @@
+<view class="content">
+    <view class="section">
+        <view class="section__title">1. 所属区域</view>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{countyList}}">
+            <view class="picker">
+                {{county}}
+            </view>
+        </picker>
+    </view>
+
+    <view class="section">
+        <view class="section__title">2. 选择日期</view>
+        <picker mode="date" value="{{date}}" bindchange="bindTimeChange">
+            <view class="picker">
+                {{date}}
+            </view>
+        </picker>
+    </view>
+
+    <view class="section">
+        <view class="section__title">3. 操作人</view>
+        <input bind:input="bindUserChange" placeholder="操作人" class="input" value="{{user}}" bind:confirm="bindUserChange"></input>
+    </view>
+
+    <view class="button-wrapper">
+        <button disabled="{{!county || !date || !user || buttonDisable}}" bind:tap="confirm">确认</button>
+    </view>
+</view>

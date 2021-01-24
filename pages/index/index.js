@@ -15,9 +15,6 @@ Page({
     qrCodeList: []
   },
   onLoad: function () {
-    wx.setNavigationBarTitle({
-      title: '首页'
-    })
     this.getCheckboxOption(1, this.data.pager.pageSize)
   },
   getCheckboxOption(currentPage, pageSize, qrCodeUrl){
