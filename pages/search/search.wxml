@@ -8,16 +8,26 @@
         <button class="confirm-button" loading="{{loading}}" disabled="{{loading}}" bind:tap="search">搜索</button>
     </view>
 
-    <view class="body">
+    <scroll-view scroll-y style="height: {{height}}px" scroll-top="{{scrollTop}}" class="body">
         <view wx:for="{{searchValues}}" wx:key="index">
-            <view class="title"><rich-text nodes="{{item.title}}"></rich-text></view>
-            <view class="value" wx:for="{{item.value}}" wx:for-item="rule" wx:for-index="index1" wx:key="index1">
-                <rich-text class="rule" nodes="{{rule}}"></rich-text>
+            <view class="title"><rich-text nodes="{{item.word_name}}"></rich-text></view>
+            <view class="value" wx:for="{{item.origin}}" wx:for-item="rule" wx:for-index="index1" wx:key="index1">
+                <rich-text class="rule" nodes="{{rule.word_content}}"></rich-text>
             </view>
+
         </view>
 
         <view wx:if="{{!searchValues.length}}" class='empty'>
             暂未搜索到任何相关法条!
         </view>
+
+    </scroll-view>
+
+    <view class="footer">
+        <pagination total="{{pager.total}}"
+                    pageSize="{{pager.pageSize}}"
+                    current="{{pager.current}}"
+                    bind:onPageChange="onPageChange"></pagination>
     </view>
+
 </view>

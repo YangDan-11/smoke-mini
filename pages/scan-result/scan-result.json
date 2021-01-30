@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "扫描结果",
-  "usingComponents": {}
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "pagination": "/components/pagination/pagination"
+  }
 }

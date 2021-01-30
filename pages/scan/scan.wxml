@@ -2,22 +2,22 @@
     <button class="new-form-button" bind:tap="addForm">新建表</button>
 </view>
 
-<view wx:for="{{forms}}" wx:key="id" data-item="{{item}}" bind:tap="addData">
+<view wx:for="{{forms}}" wx:key="index" data-item="{{item}}" bind:tap="addData">
     <view class="card">
-        <view>{{item.county}}</view>
+        <view>{{item.area}}</view>
         <view class="one-line">
             <view class="date">
-                日期：{{item.date}}
+                日期：{{item.createTime}}
             </view>
             <view class="user">
-                操作人：{{item.user}}
+                操作人：{{item.owner}}
             </view>
         </view>
 
         <view class="button-wrapper">
             <button class="add" data-item="{{item}}" catch:tap="addData">添加数据</button>
             <button class="edit" data-item="{{item}}" catch:tap="editForm">修改</button>
-            <button class="remove" catch:tap="remove">删除</button>
+            <button class="remove" data-item="{{item}}" catch:tap="remove">删除</button>
         </view>
     </view>
 </view>

@@ -6,7 +6,6 @@
     "pages/home/home",
     "pages/scan/scan",
     "pages/scan-result/scan-result",
-    "pages/addForm/addForm",
     "pages/add-form/add-form"
   ],
   "window": {

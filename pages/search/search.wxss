@@ -1,3 +1,7 @@
+page {
+    overflow: hidden;
+}
+
 .content {
     height: 100vh;
     display: flex;
@@ -14,15 +18,16 @@
 .body {
     flex: 1;
     overflow: auto;
-    padding-bottom: 32rpx;
 }
+
 .input-label {
     flex: 1;
-    padding: 16rpx;
+    padding: 0 16rpx;
     border: 2rpx solid #6190e8;
     border-radius: 16rpx;
     display: flex;
     align-items: center;
+    font-size: 32rpx;
 }
 
 .icon-wrapper {
@@ -30,6 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 72rpx;
 }
 
 .search-icon {
@@ -61,7 +67,7 @@
 
 .confirm-button {
     width: auto;
-    padding: 6rpx 40rpx;
+    padding: 0 40rpx;
     background-color: #6190e8;
     border: 2rpx solid #4a81e7;
     color: #FFF;
@@ -77,4 +83,10 @@
 
 .rule {
     white-space: pre-line;
+}
+
+.footer {
+    box-shadow: 0 -1rpx 20rpx rgba(0,0,0,0.1);
+    padding-bottom: constant(safe-area-inset-bottom); /*Compatible with IOS<11.2*/
+    padding-bottom: env(safe-area-inset-bottom); /*Compatible with IOS>11.2*/
 }

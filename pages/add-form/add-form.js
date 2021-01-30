@@ -1,9 +1,11 @@
 const item =  {
       id: 1,
-      county: '巴中市恩阳区烟草专卖局',
+      area: '巴中市恩阳区烟草专卖局',
       date: '2021-11-12',
-      user: 'xxx'
+      owner: 'xxx'
     }
+import {baseUrl} from "../../config/dev";
+
 Page({
 
   /**
@@ -11,7 +13,11 @@ Page({
    */
   data: {
     id:'',
-    countyList: ["巴中市恩阳区烟草专卖局", "巴中市xx区烟草专卖局"],
+    countyList: ["巴中市巴州区烟草专卖局",
+      "巴中市恩阳区烟草专卖局",
+      "巴中市通江县烟草专卖局",
+      "巴中市南江县烟草专卖局",
+      "巴中市平昌县烟草专卖局"],
     county: '',
     date:'',
     user: '',
@@ -25,9 +31,9 @@ Page({
     if(options.id){
       this.setData({
         id: options.id,
-        county: item.county,
+        county: item.area,
         date: item.date,
-        user: item.user
+        user: item.owner
       })
       wx.setNavigationBarTitle({
         title: "编辑表格"
@@ -40,14 +46,12 @@ Page({
   },
 
   bindPickerChange(e) {
-  console.log(e)
     const county = this.data.countyList[e.detail.value]
     this.setData({
       county: county,
     })
   },
   bindTimeChange(e) {
-    console.log('date', e)
     this.setData({
       date: e.detail.value
     })
@@ -59,6 +63,31 @@ Page({
   },
   confirm() {
     const {county,date, user} = this.data
-    console.log(county,date, user)
+
+    this.setData({
+      buttonDisable: true
+    })
+    let url;
+    if(this.data.id) {
+      url = `/smoke/table/changeTable?area=${county}&date=${date}&owner=${user}&guid=${this.data.id}`
+    } else {
+      url = `/smoke/table/saveTable?area=${county}&date=${date}&owner=${user}`
+    }
+
+    wx.request({
+      url: `${baseUrl}${url}`,
+      method: 'POST',
+      success: (res) => {
+        if(res) {
+          wx.navigateBack()
+        }
+      },
+      complete:()=> {
+        this.setData({
+          buttonDisable: false
+        })
+      }
+    })
+
   }
 })

@@ -15,7 +15,8 @@
     border: 2rpx solid #4a81e7;
     color: #FFF;
     font-size: 26rpx;
-    width: 140rpx;
+    min-width: 140rpx;
+    width: auto;
 }
 
 .prev-btn[disabled], .next-btn[disabled] {

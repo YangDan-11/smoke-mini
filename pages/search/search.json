@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "搜索法条",
+  "usingComponents": {
+    "pagination": "/components/pagination/pagination"
+  }
 }

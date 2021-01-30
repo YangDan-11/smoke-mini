@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "扫一扫",
-  "usingComponents": {}
+  "usingComponents": {
+    "pagination": "/components/pagination/pagination"
+  }
 }
