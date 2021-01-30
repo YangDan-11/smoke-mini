@@ -76,7 +76,6 @@ page {
 .checkbox-list__label {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
     padding: 20rpx;
     border-bottom: 2rpx solid #d6e4ef;
     box-sizing: border-box;
@@ -89,18 +88,21 @@ page {
 
 .label-wrapper {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
 }
 
 .label {
     line-height: 60rpx;
     margin-left: 10rpx;
+    flex: 1;
 }
 
 .desc {
     font-size: 28rpx;
     color: #dedede;
     margin-left: 10rpx;
+    flex: 1;
 }
 
 .footer {
