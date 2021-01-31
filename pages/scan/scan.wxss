@@ -26,6 +26,7 @@ page {
     padding: 32rpx 32rpx 0 32rpx;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 .new-form-button {
@@ -74,13 +75,14 @@ page {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 32rpx;
 }
 
-.date, .user {
-    flex: 1;
+.user {
+   white-space: nowrap;
 }
 
 .date {
     margin-right: 32rpx;
-    white-space: nowrap;
+    flex: 1;
 }

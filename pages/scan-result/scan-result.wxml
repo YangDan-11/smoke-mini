@@ -1,10 +1,10 @@
 <view class="container">
     <view class="wrapper">
         <view class="scan-wrapper">
-            <text>n品种</text>
+            <text>{{kindsTotal}}品种</text>
         </view>
         <view class="search-wrapper">
-            <text>{{pager.total}}条数</text>
+            <text>{{nums}}条数</text>
         </view>
     </view>
     <view class="content">
@@ -42,7 +42,7 @@
                 <view class="divider-row"></view>
                 <view class="divider">
                     <button disabled="{{!checkedList.length}}" class='delete-btn' bind:tap="remove">删除</button>
-                    <button disabled="{{!checkedList.length}}"  class="download-btn" loading="{{downloadLoading}}" bind:tap="downloadExcel">下载excel</button>
+                    <button disabled="{{!checkedList.length || downloadLoading}}" class="download-btn" bind:tap="downloadExcel">下载excel</button>
                 </view>
 
             </view>

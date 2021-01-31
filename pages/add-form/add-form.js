@@ -31,10 +31,9 @@ Page({
     if(options.id){
       this.setData({
         id: options.id,
-        county: item.area,
-        date: item.date,
-        user: item.owner
       })
+
+      this.getTableData(options.id)
       wx.setNavigationBarTitle({
         title: "编辑表格"
       })
@@ -43,6 +42,22 @@ Page({
         title: "新建表格"
       })
     }
+  },
+
+  getTableData(id) {
+    wx.request({
+      url: `${baseUrl}/smoke/table/getTableInfo?guid=${id}`,
+      success:(res) => {
+        const { data, code } = res.data;
+        if (code === 200 && data) {
+          this.setData({
+            county: data.area,
+            date: data.createTime,
+            user: data.owner
+          })
+        }
+      }
+    })
   },
 
   bindPickerChange(e) {

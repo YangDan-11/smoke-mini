@@ -109,6 +109,8 @@ page {
     box-shadow: 0 -1rpx 20rpx rgba(0,0,0,0.1);
     display: flex;
     justify-content: center;
+    padding-bottom: constant(safe-area-inset-bottom); /*Compatible with IOS<11.2*/
+    padding-bottom: env(safe-area-inset-bottom); /*Compatible with IOS>11.2*/
 }
 
 .scan {
@@ -121,7 +123,8 @@ page {
 
 .divider-column {
     height: 100%;
-    border: 2rpx solid #d6e4ef;
+    width: 1px;
+    background-color: #d6e4ef;
 }
 
 .button-wrapper {
@@ -134,7 +137,8 @@ page {
 
 .divider-row {
     width: 100%;
-    border: 2rpx solid #d6e4ef;
+    height: 1px;
+    background-color: #d6e4ef;
 }
 .divider {
     width: 100%;

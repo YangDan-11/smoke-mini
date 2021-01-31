@@ -13,14 +13,36 @@ Page({
       current: 1
     },
     tableGuid: 0,
-    qrCodeList: []
+    qrCodeList: [],
+    kindsTotal: 0,
+    nums: 0,
+    tableData: {
+      area: "",
+      createTime: "",
+      guid: "",
+      owner: ""
+    }
   },
   onLoad: function (options) {
     console.log(options)
     this.setData({
       tableGuid: options.id
     })
+    this.getTableData(options.id)
     this.getCheckboxOption(1, this.data.pager.pageSize)
+  },
+  getTableData(id) {
+    wx.request({
+      url: `${baseUrl}/smoke/table/getTableInfo?guid=${id}`,
+      success:(res) => {
+        const { data, code } = res.data;
+        if (code === 200 && data) {
+          this.setData({
+            tableData: data
+          })
+        }
+      }
+    })
   },
   getCheckboxOption(currentPage, pageSize, qrCodeUrl){
     wx.showLoading({
@@ -39,7 +61,8 @@ Page({
         wx.hideLoading();
 
         if (code === 200 && data) {
-          const { list, current, pageSize, total } = data;
+          const { smokePage, kindsTotal, nums } = data;
+          const { list, current, pageSize, total} = smokePage
           this.setData({
             checkboxOption: getOptionFromProduct(list),
             qrCodeList: list,
@@ -48,6 +71,8 @@ Page({
               current,
               pageSize
             },
+            kindsTotal,
+            nums,
             checkedList: []
           })
         } else if (code === 400) {
@@ -87,11 +112,11 @@ Page({
     wx.showLoading({
       title: '正在下载'
     });
-    const { checkedList } = this.data;
-    const encodeUrls = checkedList.map((item) => encodeURIComponent(item))
+    const { checkedList, tableData: {area, createTime, owner}, pager: { total, pageSize, current } } = this.data;
+    const filePath = total / pageSize > 1 ? `/${area}-${createTime}-${owner}-${current}.xls` : `/${area}-${createTime}-${owner}.xls`
     wx.downloadFile({
-      url: `${baseUrl}/smoke/init/downSmokeData?qrCodeUrls=${encodeUrls}&tableGuid=${this.data.tableGuid}`,
-      filePath: wx.env.USER_DATA_PATH+ '/test.xls',
+      url: `${baseUrl}/smoke/init/downSmokeData?ids=${checkedList}&tableGuid=${this.data.tableGuid}`,
+      filePath: wx.env.USER_DATA_PATH + filePath,
       success: (res) => {
         if (res.statusCode === 200) {
           const filePath = res.filePath;
@@ -129,11 +154,10 @@ Page({
     });
 
     const { checkedList } = this.data;
-    const encodeUrls = checkedList.map((item) => encodeURIComponent(item))
-    wx.request({
+      wx.request({
       url: `${baseUrl}/smoke/init/deleteSmoke`,
       data: {
-        qrCodeUrls: encodeUrls,
+        idS: checkedList,
         tableGuid: this.data.tableGuid
       },
       method: 'POST',
