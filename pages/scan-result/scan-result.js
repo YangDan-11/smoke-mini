@@ -24,7 +24,6 @@ Page({
     }
   },
   onLoad: function (options) {
-    console.log(options)
     this.setData({
       tableGuid: options.id
     })

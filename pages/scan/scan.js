@@ -6,20 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    forms: [
-      {
-        id: 1,
-        county: '巴中市恩阳区烟草专卖局',
-        date: '2021-11-12',
-        user: 'xxx'
-      },
-      {
-        id: 2,
-        county: '巴中市恩阳区烟草专卖局',
-        date: '2021-11-13',
-        user: 'xxxccc'
-      }
-    ],
+    forms: [],
   },
 
   /**
@@ -39,7 +26,6 @@ Page({
         pageSize: 999
       },
       success: (res) =>{
-        console.log(res)
         const { data, code, message } = res.data;
         wx.hideLoading();
         if (code === 200 && data) {

@@ -78,7 +78,6 @@ Page({
               if (item.word_content.indexOf(searchValueKeyWord) !== -1) {
                 const highlightLabel = "<span class=\"highLight\">" + searchValueKeyWord + "</span>"
                 const highlightItem = item.word_content.replace(searchValueKeyWord, highlightLabel)
-                console.log(highlightItem)
                 return {
                   ...item,
                   word_content: highlightItem

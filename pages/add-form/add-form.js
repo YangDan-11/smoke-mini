@@ -1,9 +1,3 @@
-const item =  {
-      id: 1,
-      area: '巴中市恩阳区烟草专卖局',
-      date: '2021-11-12',
-      owner: 'xxx'
-    }
 import {baseUrl} from "../../config/dev";
 
 Page({

@@ -10,7 +10,7 @@
                 日期：{{item.createTime}}
             </view>
             <view class="user">
-                操作人：{{item.owner}}
+                当事人：{{item.owner}}
             </view>
         </view>
 

@@ -18,8 +18,8 @@
     </view>
 
     <view class="section">
-        <view class="section__title">3. 操作人</view>
-        <input bind:input="bindUserChange" placeholder="操作人" class="input" value="{{user}}" bind:confirm="bindUserChange"></input>
+        <view class="section__title">3. 当事人</view>
+        <input bind:input="bindUserChange" placeholder="当事人" class="input" value="{{user}}" bind:confirm="bindUserChange"></input>
     </view>
 
     <view class="button-wrapper">
