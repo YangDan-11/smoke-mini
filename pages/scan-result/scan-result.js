@@ -112,7 +112,7 @@ Page({
       title: '正在下载'
     });
     const { checkedList, tableData: {area, createTime, owner}, pager: { total, pageSize, current } } = this.data;
-    const filePath = total / pageSize > 1 ? `/${area}-${createTime}-${owner}-${current}.xls` : `/${area}-${createTime}-${owner}.xls`
+    const filePath = total / pageSize > 1 ? `/${area}-${createTime}-${owner}-${current}.xlsx` : `/${area}-${createTime}-${owner}.xlsx`
     wx.downloadFile({
       url: `${baseUrl}/smoke/init/downSmokeData?ids=${checkedList}&tableGuid=${this.data.tableGuid}`,
       filePath: wx.env.USER_DATA_PATH + filePath,
@@ -122,7 +122,7 @@ Page({
           wx.openDocument({
             filePath: filePath,
             showMenu: true,
-            fileType: 'xls',
+            fileType: 'xlsx',
             success: function () {
               console.log('打开文档成功')
             }
