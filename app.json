@@ -1,12 +1,17 @@
 {
-  "pages":[
-    "pages/index/index"
+  "pages": [
+    "pages/landing/landing",
+    "pages/search/search",
+    "pages/home/home",
+    "pages/scan/scan",
+    "pages/scan-result/scan-result",
+    "pages/add-form/add-form"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#6190e8",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
 }

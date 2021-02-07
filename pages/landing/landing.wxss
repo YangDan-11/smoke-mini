@@ -1,0 +1,8 @@
+.landing-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: #016656;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

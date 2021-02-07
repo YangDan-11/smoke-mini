@@ -1,0 +1,16 @@
+
+<view class="welcome">
+    欢迎使用
+</view>
+
+<view class="wrapper">
+    <view class="card" bind:tap="jumpToScan">
+        <image class="icon" src="/assets/icon/scan.svg"></image>
+        <view class="text">扫一扫</view>
+    </view>
+
+    <view class="card" bind:tap="jumpToSearch">
+        <image class="icon" src="/assets/icon/search-white.svg"></image>
+        <view class="text">搜一搜</view>
+    </view>
+</view>

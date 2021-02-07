@@ -1,0 +1,92 @@
+page {
+    overflow: hidden;
+}
+
+.content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32rpx;
+    background-color: #FFF;
+}
+
+.body {
+    flex: 1;
+    overflow: auto;
+}
+
+.input-label {
+    flex: 1;
+    padding: 0 16rpx;
+    border: 2rpx solid #6190e8;
+    border-radius: 16rpx;
+    display: flex;
+    align-items: center;
+    font-size: 32rpx;
+}
+
+.icon-wrapper {
+    padding: 0 10rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 72rpx;
+}
+
+.search-icon {
+    width: 36rpx;
+    height: 36rpx;
+}
+.title {
+    font-size: 26rpx;
+    font-weight: bolder;
+    padding: 16rpx;
+}
+
+.value {
+    font-size: 22rpx;
+    padding: 10rpx 32rpx;
+}
+
+.highLight {
+    color: #e94545;
+}
+
+.empty {
+    width: 100%;
+    height: 300rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-button {
+    width: auto;
+    padding: 0 40rpx;
+    background-color: #6190e8;
+    border: 2rpx solid #4a81e7;
+    color: #FFF;
+    font-size: 26rpx;
+    white-space: nowrap;
+    margin: 0 0 0 16rpx;
+}
+
+.confirm-button[disabled] {
+    color: #7f7f7f;
+    border: 2rpx solid #7f7f7f;
+}
+
+.rule {
+    white-space: pre-line;
+}
+
+.footer {
+    box-shadow: 0 -1rpx 20rpx rgba(0,0,0,0.1);
+    padding-bottom: constant(safe-area-inset-bottom); /*Compatible with IOS<11.2*/
+    padding-bottom: env(safe-area-inset-bottom); /*Compatible with IOS>11.2*/
+}

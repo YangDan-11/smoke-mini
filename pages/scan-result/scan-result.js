@@ -9,16 +9,39 @@ Page({
     removeLoading: false,
     pager: {
       total: 5,
-      pageSize: 1,
+      pageSize: 500,
       current: 1
     },
-    qrCodeList: []
+    tableGuid: 0,
+    qrCodeList: [],
+    kindsTotal: 0,
+    nums: 0,
+    tableData: {
+      area: "",
+      createTime: "",
+      guid: "",
+      owner: ""
+    }
   },
-  onLoad: function () {
-    wx.setNavigationBarTitle({
-      title: '首页'
+  onLoad: function (options) {
+    this.setData({
+      tableGuid: options.id
     })
-    this.getCheckboxOption()
+    this.getTableData(options.id)
+    this.getCheckboxOption(1, this.data.pager.pageSize)
+  },
+  getTableData(id) {
+    wx.request({
+      url: `${baseUrl}/smoke/table/getTableInfo?guid=${id}`,
+      success:(res) => {
+        const { data, code } = res.data;
+        if (code === 200 && data) {
+          this.setData({
+            tableData: data
+          })
+        }
+      }
+    })
   },
   getCheckboxOption(currentPage, pageSize, qrCodeUrl){
     wx.showLoading({
@@ -29,12 +52,16 @@ Page({
       data: {
         current: currentPage,
         pageSize,
-        qrCodeUrl: qrCodeUrl
+        qrCodeUrl: qrCodeUrl,
+        tableGuid: this.data.tableGuid
       },
       success: (res) => {
         const { data, code, message } = res.data;
+        wx.hideLoading();
+
         if (code === 200 && data) {
-          const { list, current, pageSize, total } = data;
+          const { smokePage, kindsTotal, nums } = data;
+          const { list, current, pageSize, total} = smokePage
           this.setData({
             checkboxOption: getOptionFromProduct(list),
             qrCodeList: list,
@@ -42,21 +69,25 @@ Page({
               total,
               current,
               pageSize
-            }
+            },
+            kindsTotal,
+            nums,
+            checkedList: []
           })
         } else if (code === 400) {
           wx.showToast({
-            title: message
+            title: message,
+            icon: 'info',
+            duration: 2000
           })
         }
       },
       fail() {
+        wx.hideLoading();
+
         wx.showToast({
           title: '请求失败'
         })
-      },
-      complete() {
-        wx.hideLoading();
       }
     })
   },
@@ -80,18 +111,18 @@ Page({
     wx.showLoading({
       title: '正在下载'
     });
-    const { checkedList } = this.data;
-    const encodeUrls = checkedList.map((item) => encodeURIComponent(item))
-    const qrCodeUrls = encodeUrls.join(',');
+    const { checkedList, tableData: {area, createTime, owner}, pager: { total, pageSize, current } } = this.data;
+    const filePath = total / pageSize > 1 ? `/${area}-${createTime}-${owner}-${current}.xlsx` : `/${area}-${createTime}-${owner}.xlsx`
     wx.downloadFile({
-      url: `${baseUrl}/smoke/init/downSmokeData?qrCodeUrls=${qrCodeUrls}`,
+      url: `${baseUrl}/smoke/init/downSmokeData?ids=${checkedList}&tableGuid=${this.data.tableGuid}`,
+      filePath: wx.env.USER_DATA_PATH + filePath,
       success: (res) => {
         if (res.statusCode === 200) {
-          const filePath = res.tempFilePath;
+          const filePath = res.filePath;
           wx.openDocument({
             filePath: filePath,
             showMenu: true,
-            fileType: 'xls',
+            fileType: 'xlsx',
             success: function () {
               console.log('打开文档成功')
             }
@@ -122,11 +153,12 @@ Page({
     });
 
     const { checkedList } = this.data;
-    const encodeUrls = checkedList.map((item) => encodeURIComponent(item))
-
-    const qrCodeUrls = encodeUrls.join(',');
-    wx.request({
-      url: `${baseUrl}/smoke/init/deleteSmoke?qrCodeUrls=${qrCodeUrls}`,
+      wx.request({
+      url: `${baseUrl}/smoke/init/deleteSmoke`,
+      data: {
+        idS: checkedList,
+        tableGuid: this.data.tableGuid
+      },
       method: 'POST',
       success: (res) => {
         if (res.data.code === 200) {
@@ -180,6 +212,11 @@ Page({
       success: (res) => {
         this.getCheckboxOption(this.data.pager.current, this.data.pager.pageSize, res.result);
       }
+    })
+  },
+  search() {
+    wx.navigateTo({
+      url: '/pages/search/search'
     })
   }
 })

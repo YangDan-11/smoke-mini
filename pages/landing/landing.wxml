@@ -1,0 +1,3 @@
+<view class="landing-wrapper">
+    <image mode="aspectFit" src="/assets/images/landing.jpeg" bind:load="load"></image>
+</view>

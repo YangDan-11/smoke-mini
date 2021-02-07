@@ -1,0 +1,33 @@
+<view class="content">
+    <view class="input-wrapper">
+        <label class="input-label">
+            <view class="icon-wrapper"><image class="search-icon" src="/assets/icon/search-icon.svg" ></image></view>
+
+            <input class="input" value="{{inputValue}}" bind:input="onInput" bind:confirm="onConfirm" placeholder="搜索法条"></input>
+        </label>
+        <button class="confirm-button" loading="{{loading}}" disabled="{{loading}}" bind:tap="search">搜索</button>
+    </view>
+
+    <scroll-view scroll-y style="height: {{height}}px" scroll-top="{{scrollTop}}" class="body">
+        <view wx:for="{{searchValues}}" wx:key="index">
+            <view class="title"><rich-text nodes="{{item.word_name}}"></rich-text></view>
+            <view class="value" wx:for="{{item.origin}}" wx:for-item="rule" wx:for-index="index1" wx:key="index1">
+                <rich-text class="rule" nodes="{{rule.word_content}}"></rich-text>
+            </view>
+
+        </view>
+
+        <view wx:if="{{!searchValues.length}}" class='empty'>
+            暂未搜索到任何相关法条!
+        </view>
+
+    </scroll-view>
+
+    <view class="footer">
+        <pagination total="{{pager.total}}"
+                    pageSize="{{pager.pageSize}}"
+                    current="{{pager.current}}"
+                    bind:onPageChange="onPageChange"></pagination>
+    </view>
+
+</view>
