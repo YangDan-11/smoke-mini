@@ -86,7 +86,8 @@ Page({
         wx.hideLoading();
 
         wx.showToast({
-          title: '请求失败'
+          title: '请求失败',
+          icon: 'error'
         })
       }
     })
@@ -134,7 +135,8 @@ Page({
       },
       fail: () => {
         wx.showToast({
-          title: '请求失败'
+          title: '请求失败',
+          icon: 'error'
         })
       },
       complete: () => {
