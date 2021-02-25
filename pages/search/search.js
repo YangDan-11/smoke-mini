@@ -41,7 +41,7 @@ Page({
     this.setData({
       inputValue: value
     })
-    this.searchFromApi(this.data.pager.current, value)
+    this.searchFromApi(1, value)
 
   },
 
@@ -53,7 +53,7 @@ Page({
   },
 
   search() {
-    this.searchFromApi(this.data.pager.current, this.data.inputValue)
+    this.searchFromApi(1, this.data.inputValue)
   },
   searchFromApi(currentPage, searchValueKeyWord) {
     this.setData({
