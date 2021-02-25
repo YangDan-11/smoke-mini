@@ -101,7 +101,7 @@ Page({
         } else if (code === 400) {
           wx.showToast({
             title: message,
-            icon: 'info',
+            icon: 'error',
             duration: 2000
           })
         }
