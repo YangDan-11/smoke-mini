@@ -58,7 +58,6 @@ Page({
       success: (res) => {
         const { data, code, message } = res.data;
         wx.hideLoading();
-
         if (code === 200 && data) {
           const { smokePage, kindsTotal, nums } = data;
           const { list, current, pageSize, total} = smokePage
@@ -77,7 +76,7 @@ Page({
         } else if (code === 400) {
           wx.showToast({
             title: message,
-            icon: 'info',
+            icon: 'error',
             duration: 2000
           })
         }
@@ -86,7 +85,8 @@ Page({
         wx.hideLoading();
 
         wx.showToast({
-          title: '请求失败'
+          title: '请求失败',
+          icon: 'error'
         })
       }
     })
@@ -134,7 +134,8 @@ Page({
       },
       fail: () => {
         wx.showToast({
-          title: '请求失败'
+          title: '请求失败',
+          icon: 'error'
         })
       },
       complete: () => {

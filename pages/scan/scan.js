@@ -36,7 +36,7 @@ Page({
         } else if (code === 400) {
           wx.showToast({
             title: message,
-            icon: 'info',
+            icon: 'error',
             duration: 2000
           })
         }
@@ -45,7 +45,8 @@ Page({
         wx.hideLoading();
 
         wx.showToast({
-          title: '请求失败'
+          title: '请求失败',
+          icon: 'error'
         })
       }
     })
